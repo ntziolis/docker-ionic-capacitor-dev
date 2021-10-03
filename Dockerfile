@@ -30,7 +30,6 @@ RUN apt-get update -q
 RUN apt-get install -qy \
     apt-utils \
     locales \
-    gnupg2 \
     build-essential \
     curl \
     usbutils \
@@ -38,6 +37,7 @@ RUN apt-get install -qy \
     unzip \
     p7zip p7zip-full \
     python \
+    openssl \
     openjdk-${JAVA_VERSION}-jre \
     openjdk-${JAVA_VERSION}-jdk
 
@@ -54,10 +54,7 @@ RUN apt-get install -qy sudo \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Install Ruby
-RUN mkdir ~/.gnupg \
-    && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
-    && gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB \
-    && curl -sSL https://get.rvm.io | bash \
+RUN curl -sSL https://get.rvm.io | bash \
     && source /usr/local/rvm/scripts/rvm \
     && rvm install ruby-${RUBY_VERSION} \
     && rvm --default use ruby-${RUBY_VERSION}
