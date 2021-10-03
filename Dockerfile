@@ -87,10 +87,9 @@ ENV PATH=$PATH:${HOME}/.npm-global/bin
 RUN gem install bundler
 
 # Install Chrome
-RUN curl -sL https://dl-ssl.google.com/linux/linux_signing_key.pub -o chrome_linux_signing_key.pub \
-    && apt-key add chrome_linux_signing_key.pub \
-    && echo 'deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' | tee /etc/apt/sources.list.d/google-chrome.list \
-    && apt-get update -q && apt-get install -qy google-chrome-stable=${CHROME_VERSION}
+RUN curl -LO https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+    apt-get install -y ./google-chrome-stable_current_amd64.deb \
+    rm google-chrome-stable_current_amd64.deb    
 
 # Copy adbkey
 RUN mkdir -p -m 0750 /root/.android
